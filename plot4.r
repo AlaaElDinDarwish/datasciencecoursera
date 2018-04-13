@@ -1,0 +1,15 @@
+Data<-read.table("household_power_consumption.txt",sep=";",skip=1,na.strings="?")
+colnames(Data)<-c("Date","Time","Global_active_power","Global_reactive_power","Voltage","Global_intensity","Sub_metering_1","Sub_metering_2","Sub_metering_3")
+NeededData<-subset(Data,Data$Date=="1/2/2007" | Data$Date =="2/2/2007")
+
+par(mfrow = c(2, 2))
+hist(NeededData$Global_active_power, main = "Global Active Power",xlab = "Global Active Power (kilowatts)", col = "Red")
+plot(NeededData$datetime,NeededData$Voltage, type = "l",xlab="datetime",ylab="Voltage")
+plot(NeededData$datetime,NeededData$Sub_metering_1,type = "l", ylab = "Energy sub metering", xlab = "")
+points(NeededData$datetime,NeededData$Sub_metering_2,type = "l", ylab = "Energy sub metering", xlab = "",col="red")
+points(NeededData$datetime,NeededData$Sub_metering_3,type = "l", ylab = "Energy sub metering", xlab = "",col="blue")
+legend("topright", lty = 1, col = c("black", "red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+plot(NeededData$datetime,NeededData$Global_active_power, type = "l",xlab="datetime",ylab="Global_active_power")
+
+dev.copy(png, file = "plot4.png", height = 480, width = 480)
+dev.off()
